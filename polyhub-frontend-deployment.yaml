@@ -1,0 +1,42 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polylib-frontend-deployment
+  labels:
+    app: polylib-frontend-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: polylib-frontend-deployment
+  template:
+    metadata:
+      labels:
+        app: polylib-frontend-deployment
+    spec:
+      containers:
+        - name: polylib-frontend-deployment
+          image: blackrock30/polylib-frontend-service:1.1
+          ports:
+            - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: polylib-frontend-service
+spec:
+  selector:
+    app.kubernetes.io/name: polylib-frontend-deployment
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+#status:
+#  loadBalancer:
+#    ingress:
+#      - ip: 192.0.2.127
+

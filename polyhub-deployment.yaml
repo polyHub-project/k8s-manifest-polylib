@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polylib-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: polylib-deployment
+  template:
+    metadata:
+      name: polylib-deployment
+      labels:
+        app: polylib-deployment
+    spec:
+      containers:
+        - name: polylib-deployment
+          image: blackrock30/polylib-service:1.1
+          ports:
+            - containerPort: 8081
+
+          imagePullPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: polylib-service
+spec:
+  selector:
+    app: polylib-deployment
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+  type: NodePort

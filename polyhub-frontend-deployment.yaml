@@ -4,7 +4,7 @@ metadata:
   name: frontend-deployment
   namespace: default
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend-deployment
@@ -15,12 +15,10 @@ spec:
     spec:
       containers:
         - name: frontend-deployment
-          image: blackrock30/polylib-frontend-service:2.0
+          image: blackrock30/polylib-frontend-service:2.1
           ports:
             - containerPort: 80
-          env:
-            - name: server_URL
-              value: "http://polylib-service:8081"
+
           imagePullPolicy: Always
 
 ---
